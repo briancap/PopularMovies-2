@@ -3,4 +3,15 @@
 
     <!--menu strings-->
     <string name="sort_order">Sort Order</string>
+    <string name="pref_sort_title">Sort By</string>
+    <string name="pref_sort_key">Sort</string>
+    <string name="pref_sort_default">Most Popular</string>
+
+
+    <!-- Array Option/Values -->
+    <string name="pref_sort_most_popular">Most Popular</string>
+    <string name="pref_sort_highest_rated">Highest Rated</string>
+
+    <!-- Activity NAmes-->
+    <string name="settings_Activity">SettingsActivity</string>
 </resources>
