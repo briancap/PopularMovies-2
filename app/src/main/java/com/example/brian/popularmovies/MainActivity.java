@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
                             .add(R.id.container, new MoviesFragment())
                             .commit();
         }
-        Log.e(LOG_TAG, "end of onCreate");
     }
 
     @Override

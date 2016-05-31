@@ -1,11 +1,17 @@
 package com.example.brian.popularmovies;
 
 import android.content.Context;
+import android.graphics.Point;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
@@ -14,13 +20,28 @@ import java.util.Objects;
  */
 public class ImageAdapter extends BaseAdapter {
     private Context context;
+    public String[] images;
 
-    public ImageAdapter(Context context){
+    DisplayMetrics metrics;
+    int imageWidth;
+    int imageHeight;
+
+    public ImageAdapter(Context context, String[] images){
         this.context = context;
+        this.images = images;
+
+        metrics = context.getResources().getDisplayMetrics();
+        imageWidth = (metrics.widthPixels)/2;
+        imageHeight = (metrics.heightPixels/2);
     }
 
     public int getCount(){
-        return 1;
+        if(images !=null){
+            return images.length;
+        } else {
+            return 0;
+        }
+
     }
 
     public long getItemId(int position){
@@ -35,20 +56,24 @@ public class ImageAdapter extends BaseAdapter {
         ImageView imageView;
         if(convertView == null){
             imageView = new ImageView(context);
-            imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(8, 8, 8, 8);
         } else {
             imageView = (ImageView) convertView;
         }
 
-        //imageView.setImageResource(mThumbIds);
+        if(images != null) {
+            Picasso.with(context)
+                    .load(images[position])
+                    .resize(imageWidth, imageHeight)
+                    .into(imageView);
+        }
+
         return imageView;
     }
 
-   // private Integer[] mThumbIds = {
-
-   // }
+    public void updateAdpater(String[] imagePaths){
+        images = imagePaths;
+        notifyDataSetChanged();
+    }
 
 
 }
