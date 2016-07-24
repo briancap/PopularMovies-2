@@ -13,5 +13,6 @@
     <string name="pref_sort_highest_rated">Highest Rated</string>
 
     <!-- Activity NAmes-->
-    <string name="settings_Activity">SettingsActivity</string>
+    <string name="settings_Activity">Settings</string>
+    <string name="movies_detail_activity">Movie Detail</string>
 </resources>
