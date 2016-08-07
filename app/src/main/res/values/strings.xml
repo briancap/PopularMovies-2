@@ -12,7 +12,17 @@
     <string name="pref_sort_most_popular">Most Popular</string>
     <string name="pref_sort_highest_rated">Highest Rated</string>
 
-    <!-- Activity NAmes-->
+    <!-- Activity Names-->
     <string name="settings_Activity">Settings</string>
     <string name="movies_detail_activity">Movie Detail</string>
+
+    <!-- Movie Detail Fragment Layout -->
+    <string name="release_date_tag">Release Date:</string>
+    <string name="runtime_tag">Runtime:</string>
+    <string name="rating_tag">Rating:</string>
+    <string name="description_tag">Description:</string>
+    <string name="rating_units">/10</string>
+
+
+
 </resources>

@@ -20,6 +20,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     HashMap<String, Object> oneMovieData;
     final String TITLE_TAG = "original_title";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

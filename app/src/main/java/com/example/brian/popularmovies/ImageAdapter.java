@@ -22,7 +22,7 @@ public class ImageAdapter extends BaseAdapter {
     private Context context;
     public String[] images;
 
-    DisplayMetrics metrics;
+    DisplayMetrics displayMetrics;
     int imageWidth;
     int imageHeight;
 
@@ -30,9 +30,9 @@ public class ImageAdapter extends BaseAdapter {
         this.context = context;
         this.images = images;
 
-        metrics = context.getResources().getDisplayMetrics();
-        imageWidth = (metrics.widthPixels)/2;
-        imageHeight = (metrics.heightPixels/2);
+        displayMetrics = context.getResources().getDisplayMetrics();
+        imageWidth = (displayMetrics.widthPixels)/2;
+        imageHeight = (displayMetrics.heightPixels/2);
     }
 
     public int getCount(){

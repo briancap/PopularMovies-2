@@ -2,6 +2,7 @@ package com.example.brian.popularmovies;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,12 @@ public class MoviesDetailFragment extends Fragment {
     final String RATING_TAG = "vote_average";
     final String RELEASE_DATE_TAG = "release_date";
 
+    String baseImageUrl = "http://image.tmdb.org/t/p/w185//";
+
+    DisplayMetrics displayMetrics;
+    int imageWidth;
+    int imageHeight;
+
     public MoviesDetailFragment(){
 
     }
@@ -35,6 +42,10 @@ public class MoviesDetailFragment extends Fragment {
 
         Bundle bundle = getArguments();
         oneMovieData = (Map) bundle.get("map");
+
+        displayMetrics = getContext().getResources().getDisplayMetrics();
+        imageWidth = (displayMetrics.widthPixels)/3;
+        imageHeight = (displayMetrics.heightPixels/3);
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container
@@ -45,17 +56,15 @@ public class MoviesDetailFragment extends Fragment {
         TextView    title       = (TextView) rootView.findViewById(R.id.Title);
         ImageView   thumbnail   = (ImageView) rootView.findViewById(R.id.Thumbnail);
         TextView    releaseDate = (TextView) rootView.findViewById(R.id.ReleaseDate);
-        TextView    runtime     = (TextView) rootView.findViewById(R.id.Runtime);
         TextView    rating      = (TextView) rootView.findViewById(R.id.Rating);
         TextView    description = (TextView) rootView.findViewById(R.id.Description);
 
         title.setText(oneMovieData.get(TITLE_TAG).toString());
         Picasso.with(getContext())
-                .load(THUMBNAIL_TAG)
-                //.resize(150, 150)
+                .load(baseImageUrl + oneMovieData.get(THUMBNAIL_TAG).toString())
+                .resize(imageWidth, imageHeight)
                 .into(thumbnail);
         releaseDate.setText(oneMovieData.get(RELEASE_DATE_TAG).toString());
-        runtime.setText("who knows");
         rating.setText(oneMovieData.get(RATING_TAG).toString());
         description.setText(oneMovieData.get(OVERVIEW_TAG).toString());
 
