@@ -92,7 +92,7 @@ public class MoviesFragment extends Fragment{
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String sort = sharedPreferences.getString(getString(R.string.pref_sort_key)
                                     ,   getString(R.string.pref_sort_default));
-        Log.e(LOG_TAG, sort);
+        //Log.e(LOG_TAG, sort);
         if(sort.equals(getString(R.string.pref_sort_highest_rated))) {
             movieApiDataRequest.execute(TOP_RATED);
         } else {
@@ -139,17 +139,18 @@ public class MoviesFragment extends Fragment{
                 urlConnection.connect();
 
                 InputStream inputStream = urlConnection.getInputStream();
-                StringBuffer stringBuffer = new StringBuffer();
+                StringBuilder stringBuilder = new StringBuilder();
 
                 bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
                 String line;
 
                 while ((line = bufferedReader.readLine()) != null){
-                    stringBuffer.append(line + "\n");
+                    stringBuilder   .append(line)
+                                    .append("\n");
                 }
 
-                jsonResponse = stringBuffer.toString();
+                jsonResponse = stringBuilder.toString();
 
                 allData = parseJsonResponse(jsonResponse);
 
