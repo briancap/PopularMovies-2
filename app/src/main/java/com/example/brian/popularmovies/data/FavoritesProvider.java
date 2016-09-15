@@ -11,23 +11,28 @@ import android.support.annotation.Nullable;
 /**
  * Created by Brian on 9/15/2016.
  */
-public class MovieProvider extends ContentProvider{
+public class FavoritesProvider extends ContentProvider{
 
     private static final UriMatcher sUriMatcher = matchUri();
-    private MovieDBHelper mMovieDBHelper;
-    private static final SQLiteQueryBuilder sWeatherByLocationSettingQueryBuilder;
+    private FavoritesDB mFavoritesDB;
+    private static SQLiteQueryBuilder mQueryBuilder;
 
-    static final int POPULAR = 100;
+    static final int FAVORITE = 100;
 
 
     @Override
     public boolean onCreate() {
+        mQueryBuilder = new SQLiteQueryBuilder();
+        mQueryBuilder.setTables(FavoritesContract.FavoriteTable.TABLE_NAME);
+
+
         return false;
     }
 
     @Nullable
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+
         return null;
     }
 
@@ -55,10 +60,10 @@ public class MovieProvider extends ContentProvider{
 
     static UriMatcher matchUri(){
         final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        final String authority = MovieContract.AUTHORITY;
+        final String authority = FavoritesContract.AUTHORITY;
 
         // For each type of URI you want to add, create a corresponding code.
-        uriMatcher.addURI(authority, MovieContract.POPULAR, POPULAR);
+        uriMatcher.addURI(authority, FavoritesContract.FAVORITE, FAVORITE);
 
 
 
