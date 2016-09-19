@@ -42,7 +42,7 @@ public class MoviesFragment extends Fragment{
     final String BASE_URL = "http://api.themoviedb.org/3/movie/";
     final String API_KEY_PARAM = "api_key";
     final String API_KEY = "****API KEY GOES HERE*****";
-    
+
 
     final String MOVIE_ARRAY_TAG = "results";
     final String TITLE_TAG = "original_title";
@@ -92,7 +92,7 @@ public class MoviesFragment extends Fragment{
         MovieApiDataRequest movieApiDataRequest = new MovieApiDataRequest();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String sort = sharedPreferences.getString(getString(R.string.pref_sort_key)
-                                    ,   getString(R.string.pref_sort_default));
+                ,   getString(R.string.pref_sort_default));
         //Log.e(LOG_TAG, sort);
         if(sort.equals(getString(R.string.pref_sort_highest_rated))) {
             movieApiDataRequest.execute(TOP_RATED);
@@ -102,7 +102,12 @@ public class MoviesFragment extends Fragment{
     }
 
     public String [] getImagesPathsFromResultMap(Map<Integer, Map<String, Object>> resultMap){
-        imagePaths = new String[resultMap.size()];
+        if(resultMap != null){
+            imagePaths = new String[resultMap.size()];
+        } else {
+            Log.e(LOG_TAG, "result is null");
+        }
+
 
         for(int i = 0; i < resultMap.size(); i++){
             //get the Map at position i, then get the title from the single movie map
@@ -148,7 +153,7 @@ public class MoviesFragment extends Fragment{
 
                 while ((line = bufferedReader.readLine()) != null){
                     stringBuilder   .append(line)
-                                    .append("\n");
+                            .append("\n");
                 }
 
                 jsonResponse = stringBuilder.toString();
@@ -227,6 +232,7 @@ public class MoviesFragment extends Fragment{
 
     }
 }
+
 
 
 
