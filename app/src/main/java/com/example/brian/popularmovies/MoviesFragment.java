@@ -42,7 +42,7 @@ public class MoviesFragment extends Fragment{
     final String BASE_URL = "http://api.themoviedb.org/3/movie/";
     final String API_KEY_PARAM = "api_key";
     final String API_KEY = "****API KEY GOES HERE*****";
-
+    
 
     final String MOVIE_ARRAY_TAG = "results";
     final String TITLE_TAG = "original_title";

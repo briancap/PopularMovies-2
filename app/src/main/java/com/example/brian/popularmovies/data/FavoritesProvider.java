@@ -9,9 +9,7 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 
-/**
- * Created by Brian on 9/15/2016.
- */
+
 public class FavoritesProvider extends ContentProvider{
 
     private static final UriMatcher sUriMatcher = matchUri();
@@ -51,6 +49,8 @@ public class FavoritesProvider extends ContentProvider{
                 , null
                 , sortOrder
         );
+        //set notification uri to the uri passed in so the provider registers a content observer
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
     }
 
@@ -61,7 +61,7 @@ public class FavoritesProvider extends ContentProvider{
         final int match = sUriMatcher.match(uri);
 
         if(match == FAVORITE){
-            //set to DIR becasue there can be more than one favorite
+            //set to DIR because there can be more than one favorite.
             return FavoritesContract.FavoriteTable.DIR_TYPE;
         } else {
             throw new UnsupportedOperationException("Unknown Uri: " + uri);
@@ -80,20 +80,37 @@ public class FavoritesProvider extends ContentProvider{
             long _id = db.insert(FavoritesContract.FavoriteTable.TABLE_NAME, null, values);
             if(_id > 0){
                 //TODO: this URI needs to append the _id of the row inserted.
-                // TODO: Udacity build this with a custom method in the Provider
+                // TODO: Udacity build this with a custom method in the Provider to keep uri info...
+                //TODO ....in the contract and not scattered throughout the code
                     returnUri = FavoritesContract.FavoriteTable.TABLE_URI;
             } else {
                 throw new android.database.SQLException("*** FAILED TO INSERT ROWS *** " + uri);
             }
         }
-
+        //notify content observers of inserted data
+        getContext().getContentResolver().notifyChange(uri, null);
+        db.close();
         return null;
     }
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        //TODO: delete favorites when they are unfavorited
-        return 0;
+        //delete favorites when they are unfavorited
+        SQLiteDatabase db = mFavoritesDB.getWritableDatabase();
+        final int match = sUriMatcher.match(uri);
+        int numRowsDeleted = 0;
+
+        if(selection == null){ selection = "1";} //stealing the Udacity solution to return num rows deleted for all rows
+
+        if(match == FAVORITE){
+            db.delete(FavoritesContract.FavoriteTable.TABLE_NAME, selection, selectionArgs);
+        }
+
+        if(numRowsDeleted != 0){
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        db.close(); //TODO; Udacity didn't close the db here for Sushine. oversight? or reason?
+        return numRowsDeleted;
     }
 
     @Override
