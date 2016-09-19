@@ -23,7 +23,7 @@ public class FavoritesDB extends SQLiteOpenHelper{
         final String SQL_CREATE_TABLE_POPULAR =
                 "CREATE TABLE IF NOT EXISTS "
                 + FavoriteTable.TABLE_NAME + " ("
-                + FavoriteTable._ID                  + " INTEGER PRIMARY KEY, "
+                + FavoriteTable.COLUMN_FAVORITE_ID   + " INTEGER PRIMARY KEY, "
                 + FavoriteTable.COLUMN_TITLE         + " TEXT NULL, "
                 + FavoriteTable.COLUMN_THUMBNAIL     + " TEXT NULL "
                 + FavoriteTable.COLUMN_DESCRIPTION   + " TEXT NULL "

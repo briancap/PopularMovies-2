@@ -33,6 +33,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.brian.popularmovies.MovieDetailActivity" />
         </activity>
+        
+        <provider
+            android:authorities="com.example.brian.popularmovies"
+            android:name=".data.FavoritesProvider" />
     </application>
 
 </manifest>

@@ -10,12 +10,12 @@ import android.provider.BaseColumns;
  */
 public class FavoritesContract {
 
-    //URI Variables
+    //Uri Variables
     public static final String AUTHORITY = "com.example.brian.popularmovies";
     public static final Uri BASE_URI = Uri.parse("content://" + AUTHORITY);
 
     //Table Names
-    public static final String FAVORITE     = "favortie";
+    public static final String FAVORITE     = "favorite";
     public static final String POPULAR      = "popular";   //this probably wont be used
     public static final String TOP_RATED    = "toprated";  //this probably wont be used
 
@@ -24,7 +24,7 @@ public class FavoritesContract {
 
         public static final String TABLE_NAME = FAVORITE;
 
-       // public static final String COLUMN_ID           = "popular_id"; //part of the BaseColumn functionality
+        public static final String COLUMN_FAVORITE_ID  = "favorite_id";
         public static final String COLUMN_TITLE        = "title";
         public static final String COLUMN_THUMBNAIL    = "thumbnail";
         public static final String COLUMN_RELEASE_DATE = "release_date";
