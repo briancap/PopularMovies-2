@@ -9,7 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
-    static final String LOG_TAG = "***MainActivity***";
+    final String LOG_TAG = getClass().getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +33,27 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
 
-        if (id == R.id.sort_order){
-            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-            startActivity(intent);
-            return true;
+        switch(id){
+           case R.id.sort_order:
+               Intent sortIntent = new Intent(getApplicationContext(), SettingsActivity.class);
+               startActivity(sortIntent);
+               break;
+            case R.id.favorites:
+                Intent favIntent = new Intent(getApplicationContext(), FavoritesActivity.class);
+                startActivity(favIntent);
+                break;
+            default:
+                break;
+
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    //TODO: build uri using the contract
+    //TODO: Content Resolver
+    //TODO: CursorLoader to get informationa nd return a Cursor
+    //TODO: connect UI to data with a CursorAdapter
 
 
 

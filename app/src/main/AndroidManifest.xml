@@ -33,6 +33,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.brian.popularmovies.MovieDetailActivity" />
         </activity>
+        <activity
+            android:name=".FavoritesActivity"
+            android:label="@string/favorites_activity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.brian.popularmovies.MovieDetailActivity" />
+        </activity>
         
         <provider
             android:authorities="com.example.brian.popularmovies"

@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -54,5 +56,9 @@ public class MovieDetailActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_main_activity, menu);
         return true;
+    }
+
+    public void addDeleteFromFavorites(View v){
+        Toast.makeText(getApplicationContext(), "added/removed from fav", Toast.LENGTH_SHORT).show();
     }
 }

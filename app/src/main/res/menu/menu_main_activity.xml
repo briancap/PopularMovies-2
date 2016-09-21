@@ -5,9 +5,15 @@
     tools:context=".MainActivity">
 
     <item
+        android:id="@+id/favorites"
+        android:orderInCategory="1"
+        android:title="@string/favorites"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/sort_order"
         android:orderInCategory="100"
         android:title="@string/sort_order"
         app:showAsAction="never" />
+
 
 </menu>

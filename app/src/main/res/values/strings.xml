@@ -7,6 +7,9 @@
     <string name="pref_sort_key">Sort</string>
     <string name="pref_sort_default">Most Popular</string>
 
+    <string name="favorites">Favorites</string>
+
+
 
     <!-- Array Option/Values -->
     <string name="pref_sort_most_popular">Most Popular</string>
@@ -15,6 +18,7 @@
     <!-- Activity Names-->
     <string name="settings_Activity">Settings</string>
     <string name="movies_detail_activity">Movie Detail</string>
+    <string name="favorites_activity">Favorites</string>
 
     <!-- Movie Detail Fragment Layout -->
     <string name="release_date_tag">Release Date:</string>

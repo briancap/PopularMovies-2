@@ -44,6 +44,7 @@ public class MoviesFragment extends Fragment{
     final String API_KEY = "****API KEY GOES HERE*****";
 
 
+
     final String MOVIE_ARRAY_TAG = "results";
     final String TITLE_TAG = "original_title";
     final String THUMBNAIL_TAG = "poster_path";
@@ -63,7 +64,7 @@ public class MoviesFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container
             , Bundle savedInstanceState){
 
-        View rootView = inflater.inflate(R.layout.movies_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_movies, container, false);
         GridView gridView = (GridView) rootView.findViewById(R.id.gridview);
         mImageAdapter = new ImageAdapter(getContext(), imagePaths);
         gridView.setAdapter(mImageAdapter);
@@ -104,18 +105,17 @@ public class MoviesFragment extends Fragment{
     public String [] getImagesPathsFromResultMap(Map<Integer, Map<String, Object>> resultMap){
         if(resultMap != null){
             imagePaths = new String[resultMap.size()];
+
+            for(int i = 0; i < resultMap.size(); i++){
+                //get the Map at position i, then get the title from the single movie map
+                String movieSpecificUrl =  (String) (resultMap.get(i)).get(THUMBNAIL_TAG);
+                if(movieSpecificUrl != null){
+                    imagePaths[i] = (baseImageUrl + movieSpecificUrl);
+                }
+
+            }
         } else {
             Log.e(LOG_TAG, "result is null");
-        }
-
-
-        for(int i = 0; i < resultMap.size(); i++){
-            //get the Map at position i, then get the title from the single movie map
-            String movieSpecificUrl =  (String) (resultMap.get(i)).get(THUMBNAIL_TAG);
-            if(movieSpecificUrl != null){
-                imagePaths[i] = (baseImageUrl + movieSpecificUrl);
-            }
-
         }
 
         return imagePaths;
