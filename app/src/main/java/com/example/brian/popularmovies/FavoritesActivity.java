@@ -11,12 +11,12 @@ public class FavoritesActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_favorites);
 
         if(savedInstanceState == null){
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
-                    .add(R.id.container, new FavoritesFragment())
+                    .add(R.id.container_favorites, new FavoritesFragment())
                     .commit();
         }
     }

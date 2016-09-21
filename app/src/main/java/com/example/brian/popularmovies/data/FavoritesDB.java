@@ -20,7 +20,7 @@ public class FavoritesDB extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        final String SQL_CREATE_TABLE_POPULAR =
+        final String SQL_CREATE_TABLE_FAVORITES =
                 "CREATE TABLE IF NOT EXISTS "
                 + FavoriteTable.TABLE_NAME + " ("
                 + FavoriteTable.COLUMN_FAVORITE_ID   + " INTEGER PRIMARY KEY, "
@@ -30,7 +30,7 @@ public class FavoritesDB extends SQLiteOpenHelper{
                 + FavoriteTable.COLUMN_RATING        + " TEXT NULL "
                 + FavoriteTable.COLUMN_RELEASE_DATE  + " TEXT NULL "
                 + " );";
-        db.execSQL(SQL_CREATE_TABLE_POPULAR);
+        db.execSQL(SQL_CREATE_TABLE_FAVORITES);
     }
 
     @Override

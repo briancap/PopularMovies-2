@@ -32,7 +32,7 @@ public class FavoritesContract {
         public static final String COLUMN_DESCRIPTION  = "description";
 
 
-        public static final Uri TABLE_URI = BASE_URI.buildUpon().appendPath(FAVORITE).build();
+        public static final Uri FAVORITES_URI = BASE_URI.buildUpon().appendPath(FAVORITE).build();
 
         public static final String DIR_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
                 + "/" + AUTHORITY
@@ -42,9 +42,9 @@ public class FavoritesContract {
                 + "/" + AUTHORITY
                 + "/" + FAVORITE;
 
-        //gets the URI ofr a specific movie id
+        //gets the URI for a specific movie id
         public static Uri buildFavoriteURI(long movieID){
-            return ContentUris.withAppendedId(TABLE_URI, movieID);
+            return ContentUris.withAppendedId(FAVORITES_URI, movieID);
         }
 
 

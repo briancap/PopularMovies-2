@@ -82,7 +82,7 @@ public class FavoritesProvider extends ContentProvider{
                 //TODO: this URI needs to append the _id of the row inserted.
                 // TODO: Udacity build this with a custom method in the Provider to keep uri info...
                 //TODO ....in the contract and not scattered throughout the code
-                    returnUri = FavoritesContract.FavoriteTable.TABLE_URI;
+                    returnUri = FavoritesContract.FavoriteTable.FAVORITES_URI;
             } else {
                 throw new android.database.SQLException("*** FAILED TO INSERT ROWS *** " + uri);
             }
