@@ -41,9 +41,6 @@ public class MoviesFragment extends Fragment{
 
     final String BASE_URL = "http://api.themoviedb.org/3/movie/";
     final String API_KEY_PARAM = "api_key";
-    final String API_KEY = "****API KEY GOES HERE*****";
-
-
 
     final String MOVIE_ARRAY_TAG = "results";
     final String TITLE_TAG = "original_title";
@@ -134,7 +131,10 @@ public class MoviesFragment extends Fragment{
 
                 Uri uri = Uri.parse(BASE_URL).buildUpon()
                         .appendPath(params[0])
-                        .appendQueryParameter(API_KEY_PARAM, API_KEY)
+                        //stole Udacity's BuildConfig style of declaring the API_KEY
+                        //...so i stop accidentally committing the key and having to erase commit history
+                        //...for an important file
+                        .appendQueryParameter(API_KEY_PARAM, BuildConfig.API_KEY)
                         .build();
 
                 URL url = new URL(uri.toString());
