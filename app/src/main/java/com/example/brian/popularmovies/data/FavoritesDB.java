@@ -23,11 +23,12 @@ public class FavoritesDB extends SQLiteOpenHelper{
         final String SQL_CREATE_TABLE_FAVORITES =
                 "CREATE TABLE IF NOT EXISTS "
                 + FavoriteTable.TABLE_NAME + " ("
-                + FavoriteTable.COLUMN_FAVORITE_ID   + " INTEGER PRIMARY KEY, "
+                + FavoriteTable.COLUMN_ID_AI         + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + FavoriteTable.COLUMN_FAVORITE_ID   + " INTEGER, "
                 + FavoriteTable.COLUMN_TITLE         + " TEXT NULL, "
-                + FavoriteTable.COLUMN_THUMBNAIL     + " TEXT NULL "
-                + FavoriteTable.COLUMN_DESCRIPTION   + " TEXT NULL "
-                + FavoriteTable.COLUMN_RATING        + " TEXT NULL "
+                + FavoriteTable.COLUMN_THUMBNAIL     + " TEXT NULL, "
+                + FavoriteTable.COLUMN_DESCRIPTION   + " TEXT NULL, "
+                + FavoriteTable.COLUMN_RATING        + " TEXT NULL, "
                 + FavoriteTable.COLUMN_RELEASE_DATE  + " TEXT NULL "
                 + " );";
         db.execSQL(SQL_CREATE_TABLE_FAVORITES);

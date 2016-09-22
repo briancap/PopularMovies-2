@@ -24,6 +24,7 @@ public class FavoritesContract {
 
         public static final String TABLE_NAME = FAVORITE;
 
+        public static final String COLUMN_ID_AI        = "_id";
         public static final String COLUMN_FAVORITE_ID  = "favorite_id";
         public static final String COLUMN_TITLE        = "title";
         public static final String COLUMN_THUMBNAIL    = "thumbnail";
