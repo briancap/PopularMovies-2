@@ -21,6 +21,8 @@ public class FavoritesFragment extends Fragment implements LoaderManager.LoaderC
     static final int LOADER_ID = 0;      //needs to be unique for every loader in the activity
     FavoritesAdapter mFavoritesAdapter;
 
+    //TODO: add String[] projection here
+
     public FavoritesFragment(){
 
     }
@@ -41,7 +43,7 @@ public class FavoritesFragment extends Fragment implements LoaderManager.LoaderC
 
         View rootView = inflater.inflate(R.layout.fragment_favorites, container, false);
 
-        //TODO: make a new favorites adapter with this cursor
+        // make a new favorites adapter with this cursor
         mFavoritesAdapter = new FavoritesAdapter(getActivity(), null, 0);
 
         ListView favoritesListView = (ListView) rootView.findViewById(R.id.favorites_list_view);
@@ -52,7 +54,6 @@ public class FavoritesFragment extends Fragment implements LoaderManager.LoaderC
             Log.e(LOG_TAG, "listview is null");
         }
 
-        //TODO: use content resolver to get a cursor
 
         return rootView;
     }
@@ -60,16 +61,15 @@ public class FavoritesFragment extends Fragment implements LoaderManager.LoaderC
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        //TODO: build uri using contract
+        // build uri using contract
         Uri favoritesUri = FavoritesContract.FavoriteTable.FAVORITES_URI; //do i need the id that Udacity tacks on the end of this??
 
         CursorLoader cursorLoader = new CursorLoader(   getActivity()   //context
                 , favoritesUri  //uri
-                , null          //projection
+                , null          //projection //TODO: this is where the projection from above would get passed in
                 , null          //selection
                 , null          //selectionArgs
                 , null);        //sortOrder
-
 
         return cursorLoader;
     }
@@ -77,6 +77,8 @@ public class FavoritesFragment extends Fragment implements LoaderManager.LoaderC
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mFavoritesAdapter.swapCursor(data);
+
+
     }
 
     @Override

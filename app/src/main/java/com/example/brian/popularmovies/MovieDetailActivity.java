@@ -7,7 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewParent;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -59,6 +63,12 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     public void addDeleteFromFavorites(View v){
-        Toast.makeText(getApplicationContext(), "added/removed from fav", Toast.LENGTH_SHORT).show();
+        View v2 = (View) v.getParent().getParent();
+       TextView tv = (TextView) v2.findViewById(R.id.Title);
+
+         if(v2.getId() == R.id.FullLayout){
+            Toast.makeText(getApplicationContext(), tv.getText().toString(), Toast.LENGTH_SHORT).show();
+        }
+        Toast.makeText(getApplicationContext(), "nada", Toast.LENGTH_SHORT).show();
     }
 }

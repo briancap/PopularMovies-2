@@ -42,7 +42,7 @@ public class FavoritesProvider extends ContentProvider{
         //??? get the Cursor associated with the Favorites table
         cursor = mFavoritesDB.getReadableDatabase().query(
                 FavoritesContract.FavoriteTable.TABLE_NAME
-                , projection //TODO: should make a projection before attempting to use one
+                , projection
                 , selection
                 , selectionArgs
                 , null
@@ -116,7 +116,7 @@ public class FavoritesProvider extends ContentProvider{
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         //TODO: look into this, but it probably doens't need to be used right away
-        //TODO: the rating is proabbly the only thing that changes and not sure that's important
+        //TODO: the rating is proabbly the only thing that changes overtime and not sure that's important
         return 0;
     }
 
