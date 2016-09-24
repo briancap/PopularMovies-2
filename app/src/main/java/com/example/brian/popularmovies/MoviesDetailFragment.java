@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.Map;
 
 /**
@@ -19,14 +21,6 @@ import java.util.Map;
 public class MoviesDetailFragment extends Fragment {
 
     Map<String, Object> oneMovieData;
-
-    final String TITLE_TAG = "original_title";
-    final String THUMBNAIL_TAG = "poster_path";
-    final String OVERVIEW_TAG = "overview";
-    final String RATING_TAG = "vote_average";
-    final String RELEASE_DATE_TAG = "release_date";
-
-    String baseImageUrl = "http://image.tmdb.org/t/p/w185//";
 
     DisplayMetrics displayMetrics;
     int imageWidth;
@@ -59,14 +53,16 @@ public class MoviesDetailFragment extends Fragment {
         TextView    rating      = (TextView) rootView.findViewById(R.id.Rating);
         TextView    description = (TextView) rootView.findViewById(R.id.Description);
 
-        title.setText(oneMovieData.get(TITLE_TAG).toString());
+        title.setText(oneMovieData.get(Utility.TITLE_TAG).toString());
+       // title.setContentDescription(oneMovieData.get(MOVIE_ID)); //TODO: get the movie ID and set it here
+
         Picasso.with(getContext())
-                .load(baseImageUrl + oneMovieData.get(THUMBNAIL_TAG).toString())
+                .load(Utility.baseImageUrl + oneMovieData.get(Utility.THUMBNAIL_TAG).toString())
                 .resize(imageWidth, imageHeight)
                 .into(thumbnail);
-        releaseDate.setText(oneMovieData.get(RELEASE_DATE_TAG).toString());
-        rating.setText(oneMovieData.get(RATING_TAG).toString());
-        description.setText(oneMovieData.get(OVERVIEW_TAG).toString());
+        releaseDate.setText(oneMovieData.get(Utility.RELEASE_DATE_TAG).toString());
+        rating.setText(oneMovieData.get(Utility.RATING_TAG).toString());
+        description.setText(oneMovieData.get(Utility.OVERVIEW_TAG).toString());
 
 
         return rootView;

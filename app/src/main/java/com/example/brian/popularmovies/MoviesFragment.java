@@ -37,20 +37,19 @@ public class MoviesFragment extends Fragment{
     ImageAdapter mImageAdapter;
     Map<Integer, Map<String, Object>> allData;
 
-    String baseImageUrl = "http://image.tmdb.org/t/p/w185//";
+   // String baseImageUrl = "http://image.tmdb.org/t/p/w185//";
 
-    final String BASE_URL = "http://api.themoviedb.org/3/movie/";
-    final String API_KEY_PARAM = "api_key";
 
-    final String MOVIE_ARRAY_TAG = "results";
-    final String TITLE_TAG = "original_title";
-    final String THUMBNAIL_TAG = "poster_path";
-    final String OVERVIEW_TAG = "overview";
-    final String RATING_TAG = "vote_average";
-    final String RELEASE_DATE_TAG = "release_date";
 
-    final String POPULAR = "popular";
-    final String TOP_RATED = "top_rated";
+//    final String MOVIE_ARRAY_TAG    = "results";
+//    final String ID_TAG             = "id";
+//    final String TITLE_TAG          = "original_title";
+//    final String THUMBNAIL_TAG      = "poster_path";
+//    final String OVERVIEW_TAG       = "overview";
+//    final String RATING_TAG         = "vote_average";
+//    final String RELEASE_DATE_TAG   = "release_date";
+
+
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -93,9 +92,9 @@ public class MoviesFragment extends Fragment{
                 ,   getString(R.string.pref_sort_default));
         //Log.e(LOG_TAG, sort);
         if(sort.equals(getString(R.string.pref_sort_highest_rated))) {
-            movieApiDataRequest.execute(TOP_RATED);
+            movieApiDataRequest.execute(Utility.TOP_RATED);
         } else {
-            movieApiDataRequest.execute(POPULAR);
+            movieApiDataRequest.execute(Utility.POPULAR);
         }
     }
 
@@ -105,9 +104,9 @@ public class MoviesFragment extends Fragment{
 
             for(int i = 0; i < resultMap.size(); i++){
                 //get the Map at position i, then get the title from the single movie map
-                String movieSpecificUrl =  (String) (resultMap.get(i)).get(THUMBNAIL_TAG);
+                String movieSpecificUrl =  (String) (resultMap.get(i)).get(Utility.THUMBNAIL_TAG);
                 if(movieSpecificUrl != null){
-                    imagePaths[i] = (baseImageUrl + movieSpecificUrl);
+                    imagePaths[i] = (Utility.baseImageUrl + movieSpecificUrl);
                 }
 
             }
@@ -129,12 +128,12 @@ public class MoviesFragment extends Fragment{
 
             try{
 
-                Uri uri = Uri.parse(BASE_URL).buildUpon()
+                Uri uri = Uri.parse(Utility.BASE_URL).buildUpon()
                         .appendPath(params[0])
                         //stole Udacity's BuildConfig style of declaring the API_KEY
                         //...so i stop accidentally committing the key and having to erase commit history
                         //...for an important file
-                        .appendQueryParameter(API_KEY_PARAM, BuildConfig.API_KEY)
+                        .appendQueryParameter(Utility.API_KEY_PARAM, BuildConfig.API_KEY)
                         .build();
 
                 URL url = new URL(uri.toString());
@@ -200,7 +199,7 @@ public class MoviesFragment extends Fragment{
             Map<Integer, Map<String, Object>> allMovieData = new HashMap<>();//holds data from all movies
 
             JSONObject fullResponse = new JSONObject(jsonResponse);
-            JSONArray movieArray = fullResponse.getJSONArray(MOVIE_ARRAY_TAG);
+            JSONArray movieArray = fullResponse.getJSONArray(Utility.MOVIE_ARRAY_TAG);
 
             //loop through the JSON array of movies
             for (int i = 0; i< movieArray.length(); i++){
@@ -209,18 +208,20 @@ public class MoviesFragment extends Fragment{
                 JSONObject singleMovie = movieArray.getJSONObject(i); //gets the movie at the current for loop iteration
 
                 //gets each data point for a single movie based and the defined API JSON tag
-                String title = singleMovie.getString(TITLE_TAG);
-                String thumbnail = singleMovie.getString(THUMBNAIL_TAG);
-                String overview = singleMovie.getString(OVERVIEW_TAG);
-                Double rating = singleMovie.getDouble(RATING_TAG);
-                String releaseDate = singleMovie.getString(RELEASE_DATE_TAG);
+                int    id           = singleMovie.getInt(Utility.ID_TAG);
+                String title        = singleMovie.getString(Utility.TITLE_TAG);
+                String thumbnail    = singleMovie.getString(Utility.THUMBNAIL_TAG);
+                String overview     = singleMovie.getString(Utility.OVERVIEW_TAG);
+                Double rating       = singleMovie.getDouble(Utility.RATING_TAG);
+                String releaseDate  = singleMovie.getString(Utility.RELEASE_DATE_TAG);
 
                 //add all movie data to a MAP so it can be extracted using the tag
-                oneMovieData.put(TITLE_TAG, title);
-                oneMovieData.put(THUMBNAIL_TAG, thumbnail);
-                oneMovieData.put(OVERVIEW_TAG, overview);
-                oneMovieData.put(RATING_TAG, rating);
-                oneMovieData.put(RELEASE_DATE_TAG, releaseDate);
+                oneMovieData.put(Utility.ID_TAG, id);
+                oneMovieData.put(Utility.TITLE_TAG, title);
+                oneMovieData.put(Utility.THUMBNAIL_TAG, thumbnail);
+                oneMovieData.put(Utility.OVERVIEW_TAG, overview);
+                oneMovieData.put(Utility.RATING_TAG, rating);
+                oneMovieData.put(Utility.RELEASE_DATE_TAG, releaseDate);
 
                 allMovieData.put(i, oneMovieData);//add single movie to all movies map
 

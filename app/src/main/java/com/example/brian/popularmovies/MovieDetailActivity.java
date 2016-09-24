@@ -1,6 +1,7 @@
 package com.example.brian.popularmovies;
 
 import android.content.Intent;
+import android.content.pm.ProviderInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewParent;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,10 +24,9 @@ import java.util.Map;
  * Display Movie title, image, plot summary user rating, and release date to details activity
  */
 public class MovieDetailActivity extends AppCompatActivity {
-    static final String LOG_TAG = "*MoviesDetailActivity*";
-    HashMap<String, Object> oneMovieData;
-    final String TITLE_TAG = "original_title";
+    final String LOG_TAG = getClass().getSimpleName();
 
+    HashMap<String, Object> oneMovieData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,12 +64,21 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     public void addDeleteFromFavorites(View v){
-        View v2 = (View) v.getParent().getParent();
-       TextView tv = (TextView) v2.findViewById(R.id.Title);
+        //TODO:call insert or delete based int he check box value
+        CheckBox cb = (CheckBox) v;
 
-         if(v2.getId() == R.id.FullLayout){
-            Toast.makeText(getApplicationContext(), tv.getText().toString(), Toast.LENGTH_SHORT).show();
+        if(R.id.favoritesCheckBox == v.getId()) {
+            //isChecked returns the state that occurs after the click
+            //isChecked = True should add to Favorites
+            //isCahecked = False should delete
+            if(cb.isChecked()){
+                Toast.makeText(getApplicationContext(), "yes and checked", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "yes and not checked", Toast.LENGTH_SHORT).show();
+            }
+
+        } else {
+            Toast.makeText(getApplicationContext(), "missed", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(getApplicationContext(), "nada", Toast.LENGTH_SHORT).show();
     }
 }
