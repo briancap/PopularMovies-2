@@ -39,4 +39,9 @@ public class FavoritesDB extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS " + FavoriteTable.TABLE_NAME);
         onCreate(db);
     }
+
+    public void tempDropTable(SQLiteDatabase db){
+        db.execSQL("DROP TABLE IF EXISTS " + FavoriteTable.TABLE_NAME + ";");
+        onCreate(db);
+    }
 }

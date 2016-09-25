@@ -9,7 +9,7 @@ public class Utility {
 
     public static final String baseImageUrl = "http://image.tmdb.org/t/p/w185//";
 
-    final static String MOVIE_ARRAY_TAG    = "results";
+    final static String MOVIE_ARRAY_TAG            = "results";
     public static final String ID_TAG              = "id";
     public static final String TITLE_TAG           = "original_title";
     public static final String THUMBNAIL_TAG       = "poster_path";
