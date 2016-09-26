@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewParent;
 import android.widget.CheckBox;
@@ -66,6 +67,27 @@ public class MovieDetailActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.sort_order:
+                Intent sortIntent = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(sortIntent);
+                break;
+            case R.id.favorites:
+                Intent favIntent = new Intent(getApplicationContext(), FavoritesActivity.class);
+                startActivity(favIntent);
+                break;
+            default:
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
     public void handleCheckBoxAction(View v){
         CheckBox cb = (CheckBox) v;
 
@@ -95,7 +117,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         contentValues.put(FavoritesContract.FavoriteTable.COLUMN_TITLE          , (String)  oneMovieData.get(Utility.TITLE_TAG));
         contentValues.put(FavoritesContract.FavoriteTable.COLUMN_THUMBNAIL      , (String)  oneMovieData.get(Utility.THUMBNAIL_TAG));
         contentValues.put(FavoritesContract.FavoriteTable.COLUMN_DESCRIPTION    , (String)  oneMovieData.get(Utility.OVERVIEW_TAG));
-        contentValues.put(FavoritesContract.FavoriteTable.COLUMN_RATING         ,           oneMovieData.get(Utility.RATING_TAG).toString());
+        contentValues.put(FavoritesContract.FavoriteTable.COLUMN_RATING         ,           oneMovieData.get(Utility.RATING_TAG).toString()); //this one is toString instead of cast because you cant cast Doubles to Strings
         contentValues.put(FavoritesContract.FavoriteTable.COLUMN_RELEASE_DATE   , (String)  oneMovieData.get(Utility.RELEASE_DATE_TAG));
 
         //insert data into db

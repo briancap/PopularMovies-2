@@ -20,6 +20,8 @@ public class FavoritesDB extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        tempDropTable(db);
+
         final String SQL_CREATE_TABLE_FAVORITES =
                 "CREATE TABLE IF NOT EXISTS "
                 + FavoriteTable.TABLE_NAME + " ("
@@ -42,6 +44,5 @@ public class FavoritesDB extends SQLiteOpenHelper{
 
     public void tempDropTable(SQLiteDatabase db){
         db.execSQL("DROP TABLE IF EXISTS " + FavoriteTable.TABLE_NAME + ";");
-        onCreate(db);
     }
 }
