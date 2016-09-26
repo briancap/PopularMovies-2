@@ -1,14 +1,17 @@
 package com.example.brian.popularmovies;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.brian.popularmovies.data.FavoritesDB;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
@@ -48,13 +51,16 @@ public class MoviesDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_movies_detail, container, false);
 
         TextView    title       = (TextView) rootView.findViewById(R.id.Title);
+        CheckBox    checkBox    = (CheckBox) rootView.findViewById(R.id.favoritesCheckBox);
         ImageView   thumbnail   = (ImageView) rootView.findViewById(R.id.Thumbnail);
         TextView    releaseDate = (TextView) rootView.findViewById(R.id.ReleaseDate);
         TextView    rating      = (TextView) rootView.findViewById(R.id.Rating);
         TextView    description = (TextView) rootView.findViewById(R.id.Description);
 
         title.setText(oneMovieData.get(Utility.TITLE_TAG).toString());
-       // title.setContentDescription(oneMovieData.get(MOVIE_ID)); //TODO: get the movie ID and set it here
+
+        boolean movieInDb = FavoritesDB.isMovieInFavoritesDB(getActivity(), oneMovieData.get(Utility.ID_TAG).toString());
+        checkBox.setChecked(movieInDb);
 
         Picasso.with(getContext())
                 .load(Utility.baseImageUrl + oneMovieData.get(Utility.THUMBNAIL_TAG).toString())
@@ -67,6 +73,8 @@ public class MoviesDetailFragment extends Fragment {
 
         return rootView;
     }
+
+
 
 
 

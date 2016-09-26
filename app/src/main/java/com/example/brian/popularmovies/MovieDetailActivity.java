@@ -3,6 +3,7 @@ package com.example.brian.popularmovies;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.ProviderInfo;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.brian.popularmovies.data.FavoritesContract;
+import com.example.brian.popularmovies.data.FavoritesDB;
 
 import org.w3c.dom.Text;
 
@@ -89,21 +91,32 @@ public class MovieDetailActivity extends AppCompatActivity {
 
 
     public void handleCheckBoxAction(View v){
+        //cast the view to CheckBox so we can get to the IsChecked method
         CheckBox cb = (CheckBox) v;
+
+        //return true if movie in db, false if not
+        boolean movieInFavorites = FavoritesDB.isMovieInFavoritesDB(getApplicationContext(), oneMovieData.get(Utility.ID_TAG).toString());
+
+        Log.e(LOG_TAG, Boolean.toString(movieInFavorites));
 
         if(R.id.favoritesCheckBox == v.getId()) {
             //isChecked returns the state that occurs after the click
             //isChecked = True should add to Favorites
             //isChecked = False should delete
             if(cb.isChecked()){
-               addFavoriteToDB();
+                if (!movieInFavorites){ //user wants to add movie to favorites and the movie is not in favorites already
+                    addFavoriteToDB();
+                } else{
+                    //do nothing because the movie is already in favorites
+                }
+
             } else {
                 //TODO: remove from db
-                Toast.makeText(getApplicationContext(), "yes and not checked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "remove movie from favorites", Toast.LENGTH_SHORT).show();
                 deleteFavoriteFromDB();
             }
 
-        } else { //if the Checkbox is not the view that calls this then something is seriously wrong
+        } else { //if the Checkbox is not the view that calls this then something is seriously wrong and the show needs to be stopped
             throw new UnsupportedOperationException("running onClick off wrong view element");
         }
     }

@@ -1,6 +1,7 @@
 package com.example.brian.popularmovies.data;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -44,5 +45,20 @@ public class FavoritesDB extends SQLiteOpenHelper{
 
     public void tempDropTable(SQLiteDatabase db){
         db.execSQL("DROP TABLE IF EXISTS " + FavoriteTable.TABLE_NAME + ";");
+    }
+
+    public static boolean isMovieInFavoritesDB(Context context, String movieID){
+        Cursor checkDbForFav = context.getContentResolver().query(
+                FavoritesContract.FavoriteTable.FAVORITES_URI
+                , null //don't need a projection since im just getting the row count... is this a performance hit?
+                , FavoritesContract.FavoriteTable.COLUMN_FAVORITE_ID + " = ?"
+                , new String[] {movieID}
+                , null
+        );
+        if(checkDbForFav.getCount() > 0){ //gets the number of rows returned
+            return true;
+        } else{
+            return false;
+        }
     }
 }

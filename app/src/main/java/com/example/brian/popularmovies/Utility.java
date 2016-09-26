@@ -1,5 +1,9 @@
 package com.example.brian.popularmovies;
 
+import android.database.Cursor;
+
+import com.example.brian.popularmovies.data.FavoritesContract;
+
 /**
  * Created by Brian on 9/24/2016.
  */
@@ -22,6 +26,7 @@ public class Utility {
 
     final static String POPULAR    = "popular";
     final static String TOP_RATED  = "top_rated";
+
 
 
 }
