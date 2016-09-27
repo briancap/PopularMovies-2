@@ -106,14 +106,22 @@ public class MovieDetailActivity extends AppCompatActivity {
             if(cb.isChecked()){
                 if (!movieInFavorites){ //user wants to add movie to favorites and the movie is not in favorites already
                     addFavoriteToDB();
+                    Toast.makeText(
+                            getApplicationContext()
+                            , (String) oneMovieData.get(Utility.TITLE_TAG) + " " + getString(R.string.add_to_favorites_msg)
+                            , Toast.LENGTH_SHORT
+                    ).show();
                 } else{
                     //do nothing because the movie is already in favorites
                 }
 
             } else {
-                //TODO: remove from db
-                Toast.makeText(getApplicationContext(), "remove movie from favorites", Toast.LENGTH_SHORT).show();
                 deleteFavoriteFromDB();
+                Toast.makeText(
+                        getApplicationContext()
+                        , (String) oneMovieData.get(Utility.TITLE_TAG) + " " + getString(R.string.delete_from_favorites_msg)
+                        , Toast.LENGTH_SHORT
+                ).show();
             }
 
         } else { //if the Checkbox is not the view that calls this then something is seriously wrong and the show needs to be stopped
@@ -138,7 +146,11 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     public void deleteFavoriteFromDB(){
-
+        getContentResolver().delete(
+                FavoritesContract.FavoriteTable.FAVORITES_URI
+                , FavoritesContract.FavoriteTable.COLUMN_FAVORITE_ID + " = ?"
+                , new String[]{oneMovieData.get(Utility.ID_TAG).toString()}
+        );
 
     }
 }

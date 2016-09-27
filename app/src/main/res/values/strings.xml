@@ -7,7 +7,7 @@
     <string name="pref_sort_key">Sort</string>
     <string name="pref_sort_default">Most Popular</string>
 
-    <string name="favorites">Favorites</string>
+    <string name="favorites">Favorite</string>
 
 
 
@@ -26,6 +26,11 @@
     <string name="rating_tag">Rating:</string>
     <string name="description_tag">Description:</string>
     <string name="rating_units">/10</string>
+
+    <!-- Toast Messages -->
+    <string name="add_to_favorites_msg"> added to favorites</string>
+    <string name="delete_from_favorites_msg"> deleted from favorites</string>
+
 
 
 
