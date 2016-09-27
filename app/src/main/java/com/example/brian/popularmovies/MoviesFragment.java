@@ -37,20 +37,6 @@ public class MoviesFragment extends Fragment{
     ImageAdapter mImageAdapter;
     Map<Integer, Map<String, Object>> allData;
 
-   // String baseImageUrl = "http://image.tmdb.org/t/p/w185//";
-
-
-
-//    final String MOVIE_ARRAY_TAG    = "results";
-//    final String ID_TAG             = "id";
-//    final String TITLE_TAG          = "original_title";
-//    final String THUMBNAIL_TAG      = "poster_path";
-//    final String OVERVIEW_TAG       = "overview";
-//    final String RATING_TAG         = "vote_average";
-//    final String RELEASE_DATE_TAG   = "release_date";
-
-
-
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
@@ -228,6 +214,41 @@ public class MoviesFragment extends Fragment{
             }
 
             return allMovieData;
+        }
+
+        public String getJsonDataAsString(Uri uri){
+
+            HttpURLConnection urlConnection = null;
+            BufferedReader bufferedReader = null;
+            String jsonResponse;
+            StringBuilder stringBuilder = new StringBuilder();
+
+            try {
+                URL url = new URL(uri.toString());
+
+
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
+
+                InputStream inputStream = urlConnection.getInputStream();
+
+
+                bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+                String line;
+
+                while ((line = bufferedReader.readLine()) != null){
+                    stringBuilder   .append(line)
+                            .append("\n");
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+
+            jsonResponse = stringBuilder.toString();
+
+            return jsonResponse;
         }
 
 

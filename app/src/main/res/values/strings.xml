@@ -31,7 +31,9 @@
     <string name="add_to_favorites_msg">added to favorites</string>
     <string name="delete_from_favorites_msg">removed from favorites</string>
 
-
-
+    <!-- Favorites List-->
+    <string name="favorites_rating_tag">Rating: </string>
+    <string name="favorites_release_tag">Released: </string>
+    <string name="favorites_delete">X</string>
 
 </resources>

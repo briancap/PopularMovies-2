@@ -23,9 +23,13 @@ public class FavoritesAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        TextView tv = (TextView) view.findViewById(R.id.favorites_text_view);
+        TextView Title = (TextView) view.findViewById(R.id.favorites_title);
+        TextView Rating = (TextView) view.findViewById(R.id.favorites_rating);
+        TextView ReleaseDate = (TextView) view.findViewById(R.id.favorites_release_date);
 
-        tv.setText(cursor.getString(2)); //TODO:make projection so i don't have to hardcode column indexes
+        Title.setText(cursor.getString(2)); //TODO:make projection so i don't have to hardcode column indexes
+        Rating.setText(" " + cursor.getString(5));
+        ReleaseDate.setText(" " + cursor.getString(6));
 
     }
 }
