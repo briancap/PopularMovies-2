@@ -28,8 +28,8 @@
     <string name="rating_units">/10</string>
 
     <!-- Toast Messages -->
-    <string name="add_to_favorites_msg"> added to favorites</string>
-    <string name="delete_from_favorites_msg"> deleted from favorites</string>
+    <string name="add_to_favorites_msg">added to favorites</string>
+    <string name="delete_from_favorites_msg">removed from favorites</string>
 
 
 
