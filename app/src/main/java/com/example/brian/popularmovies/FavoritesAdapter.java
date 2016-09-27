@@ -26,10 +26,7 @@ public class FavoritesAdapter extends CursorAdapter {
         TextView tv = (TextView) view.findViewById(R.id.favorites_text_view);
         //tv.setText(cursor.); //TODO: get movie title from cursor
 
-        for(int i = 0; i < cursor.getColumnCount(); i++){
-            tv.append(cursor.getColumnName(i));
-            tv.append("\n");
-        }
+        tv.setText(cursor.getString(2)); //TODO:make projection so i don't have to hardcode column indexes
 
     }
 }
