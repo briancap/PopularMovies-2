@@ -1,5 +1,6 @@
 package com.example.brian.popularmovies;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -32,10 +33,10 @@ import java.util.Map;
  *  this contains the main content for the primary activity
  */
 public class MoviesFragment extends Fragment{
-    static final String LOG_TAG = "***MoviesFragment***";
-    String [] imagePaths;
-    ImageAdapter mImageAdapter;
-    Map<Integer, Map<String, Object>> allData;
+    final String LOG_TAG = getClass().getSimpleName();
+    static String [] imagePaths;
+    static ImageAdapter mImageAdapter;
+    static Map<Integer, Map<String, Object>> allData;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -72,187 +73,19 @@ public class MoviesFragment extends Fragment{
     }
 
     public void getMovieData(){
-        MovieApiDataRequest movieApiDataRequest = new MovieApiDataRequest();
+        //MovieApiDataRequest movieApiDataRequest = new MovieApiDataRequest();
+        MovieData movieData = new MovieData(getContext(), Utility.MAIN_DATA_TAG);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String sort = sharedPreferences.getString(getString(R.string.pref_sort_key)
                 ,   getString(R.string.pref_sort_default));
         //Log.e(LOG_TAG, sort);
         if(sort.equals(getString(R.string.pref_sort_highest_rated))) {
-            movieApiDataRequest.execute(Utility.TOP_RATED);
+            movieData.execute(Utility.TOP_RATED);
         } else {
-            movieApiDataRequest.execute(Utility.POPULAR);
+            movieData.execute(Utility.POPULAR);
         }
     }
 
-    public String [] getImagesPathsFromResultMap(Map<Integer, Map<String, Object>> resultMap){
-        if(resultMap != null){
-            imagePaths = new String[resultMap.size()];
-
-            for(int i = 0; i < resultMap.size(); i++){
-                //get the Map at position i, then get the title from the single movie map
-                String movieSpecificUrl =  (String) (resultMap.get(i)).get(Utility.THUMBNAIL_TAG);
-                if(movieSpecificUrl != null){
-                    imagePaths[i] = (Utility.baseImageUrl + movieSpecificUrl);
-                }
-
-            }
-        } else {
-            Log.e(LOG_TAG, "result is null");
-        }
-
-        return imagePaths;
-    }
-
-    public class MovieApiDataRequest extends AsyncTask<String, Void, Map<Integer, Map<String, Object>>>{
-
-        @Override
-        public Map<Integer, Map<String, Object>> doInBackground(String... params){
-
-            HttpURLConnection urlConnection = null;
-            BufferedReader bufferedReader = null;
-            String jsonResponse;
-
-            try{
-
-                Uri uri = Uri.parse(Utility.BASE_URL).buildUpon()
-                        .appendPath(params[0])
-                        //stole Udacity's BuildConfig style of declaring the API_KEY
-                        //...so i stop accidentally committing the key and having to erase commit history
-                        //...for an important file
-                        .appendQueryParameter(Utility.API_KEY_PARAM, BuildConfig.API_KEY)
-                        .build();
-
-                URL url = new URL(uri.toString());
-
-
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
-
-                InputStream inputStream = urlConnection.getInputStream();
-                StringBuilder stringBuilder = new StringBuilder();
-
-                bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-                String line;
-
-                while ((line = bufferedReader.readLine()) != null){
-                    stringBuilder   .append(line)
-                            .append("\n");
-                }
-
-                jsonResponse = stringBuilder.toString();
-
-                allData = parseJsonResponse(jsonResponse);
-
-
-            } catch (Exception e){
-                Log.e(LOG_TAG, e.toString());
-                return null;
-            } finally {
-                if (urlConnection != null){
-                    urlConnection.disconnect();
-                }
-
-                if (bufferedReader != null){
-                    try {
-                        bufferedReader.close();
-                    } catch (Exception e){
-                        Log.e(LOG_TAG, e.toString());
-                    }
-                }
-            }
-
-            return allData;
-        }
-
-        @Override
-        public void onPostExecute(Map<Integer, Map<String, Object>> result){
-            super.onPostExecute(result);
-
-            // get String[] of images
-            imagePaths = getImagesPathsFromResultMap(result);
-
-            if (imagePaths != null){
-                mImageAdapter.updateAdpater(imagePaths);
-            }
-
-        }
-
-        public Map<Integer, Map<String, Object>> parseJsonResponse(String jsonResponse)
-                throws JSONException{
-
-            Map<Integer, Map<String, Object>> allMovieData = new HashMap<>();//holds data from all movies
-
-            JSONObject fullResponse = new JSONObject(jsonResponse);
-            JSONArray movieArray = fullResponse.getJSONArray(Utility.MOVIE_ARRAY_TAG);
-
-            //loop through the JSON array of movies
-            for (int i = 0; i< movieArray.length(); i++){
-                Map<String, Object> oneMovieData = new HashMap<>(); //holds all data from a single movie
-
-                JSONObject singleMovie = movieArray.getJSONObject(i); //gets the movie at the current for loop iteration
-
-                //gets each data point for a single movie based and the defined API JSON tag
-                int    id           = singleMovie.getInt(Utility.ID_TAG);
-                String title        = singleMovie.getString(Utility.TITLE_TAG);
-                String thumbnail    = singleMovie.getString(Utility.THUMBNAIL_TAG);
-                String overview     = singleMovie.getString(Utility.OVERVIEW_TAG);
-                Double rating       = singleMovie.getDouble(Utility.RATING_TAG);
-                String releaseDate  = singleMovie.getString(Utility.RELEASE_DATE_TAG);
-
-                //add all movie data to a MAP so it can be extracted using the tag
-                oneMovieData.put(Utility.ID_TAG, id);
-                oneMovieData.put(Utility.TITLE_TAG, title);
-                oneMovieData.put(Utility.THUMBNAIL_TAG, thumbnail);
-                oneMovieData.put(Utility.OVERVIEW_TAG, overview);
-                oneMovieData.put(Utility.RATING_TAG, rating);
-                oneMovieData.put(Utility.RELEASE_DATE_TAG, releaseDate);
-
-                allMovieData.put(i, oneMovieData);//add single movie to all movies map
-
-            }
-
-            return allMovieData;
-        }
-
-        public String getJsonDataAsString(Uri uri){
-
-            HttpURLConnection urlConnection = null;
-            BufferedReader bufferedReader = null;
-            String jsonResponse;
-            StringBuilder stringBuilder = new StringBuilder();
-
-            try {
-                URL url = new URL(uri.toString());
-
-
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
-
-                InputStream inputStream = urlConnection.getInputStream();
-
-
-                bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-                String line;
-
-                while ((line = bufferedReader.readLine()) != null){
-                    stringBuilder   .append(line)
-                            .append("\n");
-                }
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-
-            jsonResponse = stringBuilder.toString();
-
-            return jsonResponse;
-        }
-
-
-    }
 }
 
 

@@ -23,7 +23,8 @@ import java.util.Map;
  */
 public class MoviesDetailFragment extends Fragment {
 
-    Map<String, Object> oneMovieData;
+    static Map<String, Object> oneMovieData;
+    static String youtubeLink;
 
     DisplayMetrics displayMetrics;
     int imageWidth;
@@ -32,6 +33,7 @@ public class MoviesDetailFragment extends Fragment {
     public MoviesDetailFragment(){
 
     }
+
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -72,6 +74,19 @@ public class MoviesDetailFragment extends Fragment {
 
 
         return rootView;
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+
+        //MovieData trailer = new MovieData(getContext(), Utility.MOVIE_TRAILER_TAG);
+       // trailer.execute(Utility.TRAILER);
+
+        //MovieData reviews = new MovieData(getContext(), Utility.MOVIE_REVIEW_TAG);
+        //reviews.execute(Utility.REVIEW);
+
+
     }
 
 
