@@ -1,12 +1,16 @@
 package com.example.brian.popularmovies;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,8 +26,9 @@ import java.util.Map;
  * Created by brian on 7/23/16.
  */
 public class MoviesDetailFragment extends Fragment {
-
+    static String LOG_TAG = "MoviesDetailFragment";
     static Map<String, Object> oneMovieData;
+    static Map<Integer, Map<String, Object>> reviewData;
     static String youtubeLink;
 
     DisplayMetrics displayMetrics;
@@ -52,12 +57,13 @@ public class MoviesDetailFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_movies_detail, container, false);
 
-        TextView    title       = (TextView) rootView.findViewById(R.id.Title);
-        CheckBox    checkBox    = (CheckBox) rootView.findViewById(R.id.favoritesCheckBox);
-        ImageView   thumbnail   = (ImageView) rootView.findViewById(R.id.Thumbnail);
-        TextView    releaseDate = (TextView) rootView.findViewById(R.id.ReleaseDate);
-        TextView    rating      = (TextView) rootView.findViewById(R.id.Rating);
-        TextView    description = (TextView) rootView.findViewById(R.id.Description);
+        TextView    title           = (TextView)    rootView.findViewById(R.id.Title);
+        CheckBox    checkBox        = (CheckBox)    rootView.findViewById(R.id.favoritesCheckBox);
+        ImageView   thumbnail       = (ImageView)   rootView.findViewById(R.id.Thumbnail);
+        TextView    releaseDate     = (TextView)    rootView.findViewById(R.id.ReleaseDate);
+        TextView    rating          = (TextView)    rootView.findViewById(R.id.Rating);
+        TextView    description     = (TextView)    rootView.findViewById(R.id.Description);
+        TextView    trailerButton   = (Button)      rootView.findViewById(R.id.launchTrailer);
 
         title.setText(oneMovieData.get(Utility.TITLE_TAG).toString());
 
@@ -72,6 +78,15 @@ public class MoviesDetailFragment extends Fragment {
         rating.setText(oneMovieData.get(Utility.RATING_TAG).toString());
         description.setText(oneMovieData.get(Utility.OVERVIEW_TAG).toString());
 
+        trailerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(youtubeLink != null){
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink)));
+                }
+            }
+        });
+
 
         return rootView;
     }
@@ -80,13 +95,23 @@ public class MoviesDetailFragment extends Fragment {
     public void onStart(){
         super.onStart();
 
-        //MovieData trailer = new MovieData(getContext(), Utility.MOVIE_TRAILER_TAG);
-       // trailer.execute(Utility.TRAILER);
+        MovieData trailer = new MovieData(getContext(), Utility.MOVIE_TRAILER_TAG);
+        trailer.execute(Utility.TRAILER);
 
-        //MovieData reviews = new MovieData(getContext(), Utility.MOVIE_REVIEW_TAG);
-        //reviews.execute(Utility.REVIEW);
+        MovieData reviews = new MovieData(getContext(), Utility.MOVIE_REVIEW_TAG);
+        reviews.execute(Utility.REVIEW);
+    }
 
+    //probably should use these funcitons to set return variables instead of static references from MovieData
+    public static void printTheMessage(){
+        //Log.e(LOG_TAG, youtubeLink);
+    }
 
+    public static void printOtherMsssage(){
+        for(int i = 0; i < reviewData.size(); i++){
+            Map<String, Object> holder = reviewData.get(i);
+            //Log.e(LOG_TAG, holder.get(Utility.COMMENT_AUTHOR_TAG).toString());
+        }
     }
 
 
@@ -94,4 +119,6 @@ public class MoviesDetailFragment extends Fragment {
 
 
 
-}
+
+
+}// END OF CLASS

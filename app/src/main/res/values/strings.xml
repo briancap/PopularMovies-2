@@ -26,6 +26,7 @@
     <string name="rating_tag">Rating:</string>
     <string name="description_tag">Description:</string>
     <string name="rating_units">/10</string>
+    <string name="launch_trailer">Launch Trailer</string>
 
     <!-- Toast Messages -->
     <string name="add_to_favorites_msg">added to favorites</string>
@@ -34,6 +35,5 @@
     <!-- Favorites List-->
     <string name="favorites_rating_tag">Rating: </string>
     <string name="favorites_release_tag">Released: </string>
-    <string name="favorites_delete">X</string>
 
 </resources>

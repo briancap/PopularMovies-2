@@ -21,14 +21,13 @@ import java.util.Objects;
 /**
  * Created by Brian on 9/27/2016.
  */
-public class MovieData extends AsyncTask<String, Void, Map<Integer, Map<String, Object>>>{
+public class MovieData extends AsyncTask<String, Void, Object>{
     final String LOG_TAG = getClass().getSimpleName();
     String [] imagePaths;
-    ImageAdapter mImageAdapter;
 
     Map<Integer, Map<String, Object>> allData;
-    String trailerURL;
-    Map<String, Object> reviews;
+    String youtubeKey;
+    Map<Integer, Map<String, Object>>reviewData;
 
     Context context;
     String requestType;
@@ -39,8 +38,8 @@ public class MovieData extends AsyncTask<String, Void, Map<Integer, Map<String, 
     }
 
     @Override
-    public Map<Integer, Map<String, Object>> doInBackground(String... params){
-
+    public Object doInBackground(String... params){
+        Object returnValues = null;
         HttpURLConnection urlConnection = null;
         BufferedReader bufferedReader = null;
         String jsonResponse;
@@ -60,12 +59,23 @@ public class MovieData extends AsyncTask<String, Void, Map<Integer, Map<String, 
 
                     jsonResponse = getJsonDataAsString(uri);
 
-                    allData = parseMainJsonResponse(jsonResponse);
+                    returnValues = parseMainJsonResponse(jsonResponse);
 
                     break;
 
-                //trailers and reviews need to add the ID, could also do this by passing in extra params
+                //trailers need to add the id and run JSON through the trailer parsing funtion
                 case Utility.MOVIE_TRAILER_TAG:
+                    uri = Uri.parse(Utility.BASE_URL_MAIN).buildUpon()
+                            .appendPath(MoviesDetailFragment.oneMovieData.get(Utility.ID_TAG).toString()) // add movie ID
+                            .appendPath(params[0])
+                            .appendQueryParameter(Utility.API_KEY_PARAM, BuildConfig.API_KEY)
+                            .build();
+
+                    jsonResponse = getJsonDataAsString(uri);
+                    returnValues = getTrailerUrlFromJson(jsonResponse);
+
+                    break;
+
                 case Utility.MOVIE_REVIEW_TAG:
                     uri = Uri.parse(Utility.BASE_URL_MAIN).buildUpon()
                             .appendPath(MoviesDetailFragment.oneMovieData.get(Utility.ID_TAG).toString()) // add movie ID
@@ -74,35 +84,34 @@ public class MovieData extends AsyncTask<String, Void, Map<Integer, Map<String, 
                             .build();
 
                     jsonResponse = getJsonDataAsString(uri);
-                    trailerURL = getTrailerUrlFromJson(jsonResponse);
-
+                    returnValues = getReviewsFromJson(jsonResponse);
                     break;
 
+
                 default:
-                    uri = null;
             }
 
-            jsonResponse = getJsonDataAsString(uri);
-            allData = parseMainJsonResponse(jsonResponse);
+            //jsonResponse = getJsonDataAsString(uri);
+            //allData = parseMainJsonResponse(jsonResponse);
 
         } catch (JSONException e){
             e.printStackTrace();
         }
 
-        return allData;
+        return returnValues;
     }
 
     @Override
-    public void onPostExecute(Map<Integer, Map<String, Object>> result){
+    public void onPostExecute(Object result){
         super.onPostExecute(result);
 
         switch(requestType) { //TODO: add switch statement here to return data based on type
             case Utility.MAIN_DATA_TAG:
-               // Map<Integer, Map<String, Object>> resultHolder = (Map<Integer, Map<String, Object>>) result;
+               allData = (Map<Integer, Map<String, Object>>) result;
 
-                MoviesFragment.allData = result;
+                MoviesFragment.allData = allData;
                 // get String[] of images
-                MoviesFragment.imagePaths = getImagesPathsFromResultMap(result);
+                MoviesFragment.imagePaths = getImagesPathsFromResultMap(allData);
 
                 if (imagePaths != null) {
                     MoviesFragment.mImageAdapter.updateAdpater(imagePaths);
@@ -111,12 +120,18 @@ public class MovieData extends AsyncTask<String, Void, Map<Integer, Map<String, 
                 break;
 
             case Utility.MOVIE_TRAILER_TAG:
+                youtubeKey = (String) result;
+                MoviesDetailFragment.youtubeLink = Utility.BASE_YOUTUBE_URL + youtubeKey;
 
-                //MoviesDetailFragment.youtubeLink =
+                MoviesDetailFragment.printTheMessage();
 
                 break;
-            case Utility.MOVIE_REVIEW_TAG:
 
+            case Utility.MOVIE_REVIEW_TAG:
+                reviewData = (Map<Integer, Map<String, Object>>) result;
+                MoviesDetailFragment.reviewData = reviewData;
+
+                MoviesDetailFragment.printOtherMsssage();
 
                 break;
 
@@ -223,22 +238,29 @@ public class MovieData extends AsyncTask<String, Void, Map<Integer, Map<String, 
         return trailerKey;
     }
 
-    public String getReviewsFromJson(String jsonResponse)throws JSONException{
+    public Map<Integer, Map<String, Object>>getReviewsFromJson(String jsonResponse)throws JSONException{
+        Map<Integer, Map<String, Object>> reviews = new HashMap<>();
+
         JSONObject fullResponse = new JSONObject(jsonResponse);
         JSONArray movieArray = fullResponse.getJSONArray(Utility.MOVIE_ARRAY_TAG);
 
         for (int i = 0; i< movieArray.length(); i++){
+            Map<String, Object> oneMovieReview = new HashMap<>();
             JSONObject singleReview = movieArray.getJSONObject(i);
 
             String author   = singleReview.getString(Utility.COMMENT_AUTHOR_TAG);
             String comment  = singleReview.getString(Utility.COMMENTS_TAG);
 
-            reviews.put(Utility.COMMENT_AUTHOR_TAG, author);
-            reviews.put(Utility.COMMENTS_TAG, comment);
+            if(reviews != null){
+                oneMovieReview.put(Utility.COMMENT_AUTHOR_TAG, author);
+                oneMovieReview.put(Utility.COMMENTS_TAG, comment);
+            } else {
+                Log.e(LOG_TAG, "reviews is null for some reason");
+            }
+            reviews.put(i, oneMovieReview);
         }
 
-
-        return null;
+        return reviews;
     }
 
     public String [] getImagesPathsFromResultMap(Map<Integer, Map<String, Object>> resultMap){
