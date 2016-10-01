@@ -121,17 +121,17 @@ public class MovieData extends AsyncTask<String, Void, Object>{
 
             case Utility.MOVIE_TRAILER_TAG:
                 youtubeKey = (String) result;
-                MoviesDetailFragment.youtubeLink = Utility.BASE_YOUTUBE_URL + youtubeKey;
+               // MoviesDetailFragment.youtubeLink = Utility.BASE_YOUTUBE_URL + youtubeKey;
 
-                MoviesDetailFragment.printTheMessage();
+                MoviesDetailFragment.setYoutubeLink(Utility.BASE_YOUTUBE_URL + youtubeKey);
 
                 break;
 
             case Utility.MOVIE_REVIEW_TAG:
                 reviewData = (Map<Integer, Map<String, Object>>) result;
-                MoviesDetailFragment.reviewData = reviewData;
+               // MoviesDetailFragment.reviewData = reviewData;
 
-                MoviesDetailFragment.printOtherMsssage();
+                MoviesDetailFragment.setReviewData(reviewData);
 
                 break;
 

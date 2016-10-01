@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.brian.popularmovies.data.FavoritesDB;
@@ -30,6 +31,7 @@ public class MoviesDetailFragment extends Fragment {
     static Map<String, Object> oneMovieData;
     static Map<Integer, Map<String, Object>> reviewData;
     static String youtubeLink;
+    static ListView commentLV;
 
     DisplayMetrics displayMetrics;
     int imageWidth;
@@ -65,6 +67,8 @@ public class MoviesDetailFragment extends Fragment {
         TextView    description     = (TextView)    rootView.findViewById(R.id.Description);
         TextView    trailerButton   = (Button)      rootView.findViewById(R.id.launchTrailer);
 
+        commentLV                   = (ListView)    rootView.findViewById(R.id.reviewListView);
+
         title.setText(oneMovieData.get(Utility.TITLE_TAG).toString());
 
         boolean movieInDb = FavoritesDB.isMovieInFavoritesDB(getActivity(), oneMovieData.get(Utility.ID_TAG).toString());
@@ -88,6 +92,7 @@ public class MoviesDetailFragment extends Fragment {
         });
 
 
+
         return rootView;
     }
 
@@ -102,16 +107,14 @@ public class MoviesDetailFragment extends Fragment {
         reviews.execute(Utility.REVIEW);
     }
 
-    //probably should use these funcitons to set return variables instead of static references from MovieData
-    public static void printTheMessage(){
-        //Log.e(LOG_TAG, youtubeLink);
+    //probably should use these functions to set return variables instead of static references from MovieData
+    public static void setYoutubeLink(String result){
+        youtubeLink = result;
     }
 
-    public static void printOtherMsssage(){
-        for(int i = 0; i < reviewData.size(); i++){
-            Map<String, Object> holder = reviewData.get(i);
-            //Log.e(LOG_TAG, holder.get(Utility.COMMENT_AUTHOR_TAG).toString());
-        }
+    public static void setReviewData(Map<Integer, Map<String, Object>> result){
+        reviewData = result;
+        commentLV.setAdapter(new ReviewAdapter(reviewData));
     }
 
 
