@@ -19,10 +19,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if(savedInstanceState == null){
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                            .add(R.id.container, new MoviesFragment())
-                            .commit();
+//            FragmentManager fragmentManager = getSupportFragmentManager();
+//            fragmentManager.beginTransaction()
+//                            .add(R.id.container, new MoviesFragment())
+//                            .commit();
         }
     }
 
@@ -53,10 +53,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //TODO: build uri using the contract
-    //TODO: Content Resolver
-    //TODO: CursorLoader to get informationa nd return a Cursor
-    //TODO: connect UI to data with a CursorAdapter
 
 
 
