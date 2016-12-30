@@ -9,7 +9,7 @@ import com.example.brian.popularmovies.data.FavoritesContract;
  */
 public class Utility {
 
-    //TODO: strings should be moved to the String res/values file, but I like "Utility." more than "R.string." for now
+    // strings could be moved to the String res/values file, but I like "Utility." more than "R.string." for now
 
     public static final String baseImageUrl = "http://image.tmdb.org/t/p/w185//";
 

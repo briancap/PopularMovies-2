@@ -21,7 +21,7 @@ public class FavoritesFragment extends Fragment implements LoaderManager.LoaderC
     static final int LOADER_ID = 0;      //needs to be unique for every loader in the activity
     FavoritesAdapter mFavoritesAdapter;
 
-    //TODO: add String[] projection here
+    // String[] projection could be aded here
 
     public FavoritesFragment(){
 
@@ -66,7 +66,7 @@ public class FavoritesFragment extends Fragment implements LoaderManager.LoaderC
 
         CursorLoader cursorLoader = new CursorLoader(   getActivity()   //context
                 , favoritesUri  //uri
-                , null          //projection //TODO: this is where the projection from above would get passed in
+                , null          //projection // this is where the projection from above would get passed in
                 , null          //selection
                 , null          //selectionArgs
                 , null);        //sortOrder

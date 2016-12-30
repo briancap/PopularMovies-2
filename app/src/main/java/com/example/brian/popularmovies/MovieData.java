@@ -231,7 +231,7 @@ public class MovieData extends AsyncTask<String, Void, Object>{
         JSONObject fullResponse = new JSONObject(jsonResponse);
         JSONArray movieArray = fullResponse.getJSONArray(Utility.MOVIE_ARRAY_TAG);
 
-        //TODO: review this, currently getting the middle quality review 0, 1, 2
+
         JSONObject singleTrailer = movieArray.getJSONObject(1);
         String trailerKey = singleTrailer.getString(Utility.YOUTUBE_KEY_TAG);
 
