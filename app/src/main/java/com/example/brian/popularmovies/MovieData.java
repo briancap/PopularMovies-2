@@ -105,7 +105,7 @@ public class MovieData extends AsyncTask<String, Void, Object>{
     public void onPostExecute(Object result){
         super.onPostExecute(result);
 
-        switch(requestType) { //TODO: add switch statement here to return data based on type
+        switch(requestType) { //switch statement here to return data based on type
             case Utility.MAIN_DATA_TAG:
                allData = (Map<Integer, Map<String, Object>>) result;
 

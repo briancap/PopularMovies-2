@@ -47,6 +47,12 @@ public class MoviesFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container
             , Bundle savedInstanceState){
 
+        if(savedInstanceState != null){
+            allData = (Map) savedInstanceState.getSerializable("allData"); //sets allData from savedInstanceState
+        } else{
+            getMovieData(); //sets allData from postExecute in MovieData
+        }
+
         View rootView = inflater.inflate(R.layout.fragment_movies, container, false);
         GridView gridView = (GridView) rootView.findViewById(R.id.gridview);
         mImageAdapter = new ImageAdapter(getContext(), imagePaths);
@@ -66,11 +72,6 @@ public class MoviesFragment extends Fragment{
         return rootView;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        getMovieData();
-    }
 
     public void getMovieData(){
         //MovieApiDataRequest movieApiDataRequest = new MovieApiDataRequest();
@@ -84,6 +85,16 @@ public class MoviesFragment extends Fragment{
         } else {
             movieData.execute(Utility.POPULAR);
         }
+
+        Log.e(LOG_TAG, "getMovieData");
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+
+        savedInstanceState.putSerializable("allData", (HashMap) allData);
+
     }
 
 }
