@@ -19,10 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if(savedInstanceState == null){
-//            FragmentManager fragmentManager = getSupportFragmentManager();
-//            fragmentManager.beginTransaction()
-//                            .add(R.id.container, new MoviesFragment())
-//                            .commit();
+
         }
     }
 

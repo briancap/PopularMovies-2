@@ -194,32 +194,37 @@ public class MovieData extends AsyncTask<String, Void, Object>{
 
         Map<Integer, Map<String, Object>> allMovieData = new HashMap<>();//holds data from all movies
 
-        JSONObject fullResponse = new JSONObject(jsonResponse);
-        JSONArray movieArray = fullResponse.getJSONArray(Utility.MOVIE_ARRAY_TAG);
+        if(jsonResponse == null){
+            Log.e(LOG_TAG, "JSON is null");
+        } else {
 
-        //loop through the JSON array of movies
-        for (int i = 0; i< movieArray.length(); i++){
-            Map<String, Object> oneMovieData = new HashMap<>(); //holds all data from a single movie
+            JSONObject fullResponse = new JSONObject(jsonResponse);
+            JSONArray movieArray = fullResponse.getJSONArray(Utility.MOVIE_ARRAY_TAG);
 
-            JSONObject singleMovie = movieArray.getJSONObject(i); //gets the movie at the current for loop iteration
+            //loop through the JSON array of movies
+            for (int i = 0; i< movieArray.length(); i++) {
+                Map<String, Object> oneMovieData = new HashMap<>(); //holds all data from a single movie
 
-            //gets each data point for a single movie based and the defined API JSON tag
-            int    id           = singleMovie.getInt(Utility.ID_TAG);
-            String title        = singleMovie.getString(Utility.TITLE_TAG);
-            String thumbnail    = singleMovie.getString(Utility.THUMBNAIL_TAG);
-            String overview     = singleMovie.getString(Utility.OVERVIEW_TAG);
-            Double rating       = singleMovie.getDouble(Utility.RATING_TAG);
-            String releaseDate  = singleMovie.getString(Utility.RELEASE_DATE_TAG);
+                JSONObject singleMovie = movieArray.getJSONObject(i); //gets the movie at the current for loop iteration
 
-            //add all movie data to a MAP so it can be extracted using the tag
-            oneMovieData.put(Utility.ID_TAG, id);
-            oneMovieData.put(Utility.TITLE_TAG, title);
-            oneMovieData.put(Utility.THUMBNAIL_TAG, thumbnail);
-            oneMovieData.put(Utility.OVERVIEW_TAG, overview);
-            oneMovieData.put(Utility.RATING_TAG, rating);
-            oneMovieData.put(Utility.RELEASE_DATE_TAG, releaseDate);
+                //gets each data point for a single movie based and the defined API JSON tag
+                int id = singleMovie.getInt(Utility.ID_TAG);
+                String title = singleMovie.getString(Utility.TITLE_TAG);
+                String thumbnail = singleMovie.getString(Utility.THUMBNAIL_TAG);
+                String overview = singleMovie.getString(Utility.OVERVIEW_TAG);
+                Double rating = singleMovie.getDouble(Utility.RATING_TAG);
+                String releaseDate = singleMovie.getString(Utility.RELEASE_DATE_TAG);
 
-            allMovieData.put(i, oneMovieData);//add single movie to all movies map
+                //add all movie data to a MAP so it can be extracted using the tag
+                oneMovieData.put(Utility.ID_TAG, id);
+                oneMovieData.put(Utility.TITLE_TAG, title);
+                oneMovieData.put(Utility.THUMBNAIL_TAG, thumbnail);
+                oneMovieData.put(Utility.OVERVIEW_TAG, overview);
+                oneMovieData.put(Utility.RATING_TAG, rating);
+                oneMovieData.put(Utility.RELEASE_DATE_TAG, releaseDate);
+
+                allMovieData.put(i, oneMovieData);//add single movie to all movies map
+            }
 
         }
 

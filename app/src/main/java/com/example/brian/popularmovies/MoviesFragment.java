@@ -86,7 +86,7 @@ public class MoviesFragment extends Fragment{
             movieData.execute(Utility.POPULAR);
         }
 
-        Log.e(LOG_TAG, "getMovieData");
+        //Log.e(LOG_TAG, "getMovieData");
     }
 
     @Override

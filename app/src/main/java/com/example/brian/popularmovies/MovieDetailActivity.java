@@ -97,7 +97,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         //return true if movie in db, false if not
         boolean movieInFavorites = FavoritesDB.isMovieInFavoritesDB(getApplicationContext(), oneMovieData.get(Utility.ID_TAG).toString());
 
-        Log.e(LOG_TAG, Boolean.toString(movieInFavorites));
+        //Log.e(LOG_TAG, Boolean.toString(movieInFavorites));
 
         if(R.id.favoritesCheckBox == v.getId()) {
             //isChecked returns the state that occurs after the click
