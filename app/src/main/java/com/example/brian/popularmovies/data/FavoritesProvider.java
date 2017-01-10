@@ -19,8 +19,8 @@ public class FavoritesProvider extends ContentProvider{
     static final int FAVORITE = 100;
 
     static { //static block allows the declaration of a bunch of static variables at once, learned this from Sunshine
-        //TODO: is there any reason these are decalred here and not in onCreate()???
-        //TODO: I copied this from Sunshine and I personally would probably do this in onCreate if i didn't copy
+        //is there any reason these are decalred here and not in onCreate()???
+        //I copied this from Sunshine and I personally would probably do this in onCreate if i didn't copy
         mQueryBuilder = new SQLiteQueryBuilder();
         mQueryBuilder.setTables(FavoritesContract.FavoriteTable.TABLE_NAME);
 
@@ -79,9 +79,6 @@ public class FavoritesProvider extends ContentProvider{
         if(match == FAVORITE){
             long _id = db.insert(FavoritesContract.FavoriteTable.TABLE_NAME, null, values);
             if(_id > 0){
-                //TODO: this URI needs to append the _id of the row inserted.
-                // TODO: Udacity build this with a custom method in the Provider to keep uri info...
-                //TODO ....in the contract and not scattered throughout the code
                     returnUri = FavoritesContract.FavoriteTable.FAVORITES_URI;
             } else {
                 throw new android.database.SQLException("*** FAILED TO INSERT ROWS *** " + uri);
@@ -109,14 +106,14 @@ public class FavoritesProvider extends ContentProvider{
         if(numRowsDeleted != 0){
             getContext().getContentResolver().notifyChange(uri, null);
         }
-        db.close(); //TODO; Udacity didn't close the db here for Sushine. oversight? or reason?
+        db.close(); // Udacity didn't close the db here for Sushine. oversight? or reason?
         return numRowsDeleted;
     }
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        //TODO: look into this, but it probably doens't need to be used right away
-        //TODO: the rating is proabbly the only thing that changes overtime and not sure that's important
+        // look into this, but it probably doens't need to be used right away
+        // the rating is proabbly the only thing that changes overtime and not sure that's important
         return 0;
     }
 
