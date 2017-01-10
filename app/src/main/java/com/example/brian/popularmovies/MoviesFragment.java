@@ -48,7 +48,7 @@ public class MoviesFragment extends Fragment{
             , Bundle savedInstanceState){
 
         if(savedInstanceState != null){
-            allData = (Map) savedInstanceState.getSerializable("allData"); //sets allData from savedInstanceState
+            allData = (Map) savedInstanceState.getSerializable(Integer.toString(R.string.allData)); //sets allData from savedInstanceState
         } else{
             getMovieData(); //sets allData from postExecute in MovieData
         }
@@ -63,7 +63,7 @@ public class MoviesFragment extends Fragment{
                                     int position, long id) {
                 Intent intent = new Intent(getContext(), MovieDetailActivity.class);
                 HashMap<Integer, Map<String, Object>> map = (HashMap) allData.get(position);
-                intent.putExtra("map", map);
+                intent.putExtra(Integer.toString(R.string.map), map);
                 startActivity(intent);
             }
         });
@@ -93,7 +93,7 @@ public class MoviesFragment extends Fragment{
     public void onSaveInstanceState(Bundle savedInstanceState){
         super.onSaveInstanceState(savedInstanceState);
 
-        savedInstanceState.putSerializable("allData", (HashMap) allData);
+        savedInstanceState.putSerializable(Integer.toString(R.string.allData), (HashMap) allData);
 
     }
 

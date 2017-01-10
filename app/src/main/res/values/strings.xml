@@ -36,4 +36,8 @@
     <string name="favorites_rating_tag">Rating: </string>
     <string name="favorites_release_tag">Released: </string>
 
+    <!-- map tags-->
+    <string name="allData">allData</string>
+    <string name="map">map</string>
+
 </resources>

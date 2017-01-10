@@ -42,7 +42,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if(intent != null) {
             //String test = (String) intent.getExtras().get("map");
-            oneMovieData = (HashMap) intent.getSerializableExtra("map");
+            oneMovieData = (HashMap) intent.getSerializableExtra(Integer.toString(R.string.map));
             //Log.e(LOG_TAG, oneMovieData.get(TITLE_TAG).toString());
         } else {
             Log.e(LOG_TAG, "movie data extra from intent is null");
@@ -50,7 +50,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         if(savedInstanceState == null){
             Bundle bundle = new Bundle();
-            bundle.putSerializable("map", oneMovieData);
+            bundle.putSerializable(Integer.toString(R.string.map), oneMovieData);
 
             MoviesDetailFragment moviesDetailFragment = new MoviesDetailFragment();
             moviesDetailFragment.setArguments(bundle);

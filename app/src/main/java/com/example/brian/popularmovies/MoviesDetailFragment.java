@@ -47,7 +47,7 @@ public class MoviesDetailFragment extends Fragment {
         setHasOptionsMenu(false);
 
         Bundle bundle = getArguments();
-        oneMovieData = (Map) bundle.get("map");
+        oneMovieData = (Map) bundle.get(Integer.toString(R.string.map));
 
         displayMetrics = getContext().getResources().getDisplayMetrics();
         imageWidth = (displayMetrics.widthPixels)/3;
